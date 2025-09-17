@@ -21,7 +21,9 @@ const DepartmentInfo = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("https://dashboard-alpha-nine-93.vercel.app/groupdepartment");
+        const res = await fetch(
+          "https://dashboard-alpha-nine-93.vercel.app/groupdepartment"
+        );
         const data = await res.json();
         setUser(data);
       } catch (err) {
@@ -33,15 +35,16 @@ const DepartmentInfo = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-      <h2 className="text-3xl font-bold text-blue-600 mb-6 text-center">
+      <h2 className="text-3xl font-bold text-blue-600 mb-8 text-center">
         Department Overview
       </h2>
 
-      <div className="w-full max-w-5xl mb-10">
+      {/* Table Section */}
+      <div className="w-full max-w-6xl mb-12 overflow-x-auto">
         {user.length === 0 ? (
           <p className="text-center text-gray-500 text-lg">Loading...</p>
         ) : (
-          <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden mb-10">
+          <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
             <thead className="bg-blue-600 text-white">
               <tr>
                 <th className="py-3 px-6 text-left">Department</th>
@@ -73,21 +76,25 @@ const DepartmentInfo = () => {
         )}
       </div>
 
-      <div className="flex w-full items-center justify-center gap-43 mt-15 flex-wrap">
-
-        <ResponsiveContainer width="50%" height={300}>
-          <BarChart data={user}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="department" />
-            <YAxis allowDecimals={false} />
-            <Tooltip />
-            <Bar dataKey="employees" fill="#3B82F6" radius={[6, 6, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
-
-        <div className="w-full max-w-md">
+      {/* Charts Section */}
+      <div className="w-full max-w-6xl flex flex-col lg:flex-row items-center justify-center gap-10">
         
-          <ResponsiveContainer width="50%" height={300}>
+        {/* Bar Chart */}
+        <div className="w-full lg:w-1/2 h-80 bg-white shadow-lg rounded-lg p-4">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={user}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="department" />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Bar dataKey="employees" fill="#3B82F6" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Pie Chart */}
+        <div className="w-full lg:w-1/2 h-80 bg-white shadow-lg rounded-lg p-4">
+          <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={user}
@@ -95,12 +102,14 @@ const DepartmentInfo = () => {
                 nameKey="department"
                 cx="50%"
                 cy="50%"
-                outerRadius={110}
-                fill="#8884d8"
+                outerRadius={100}
                 label
               >
                 {user.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -108,8 +117,6 @@ const DepartmentInfo = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-
-        
       </div>
     </div>
   );
