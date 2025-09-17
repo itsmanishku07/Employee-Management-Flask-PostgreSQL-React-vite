@@ -10,19 +10,17 @@ const Header = () => {
     localStorage.setItem("isLogin", false);
     localStorage.removeItem("username");
     localStorage.removeItem("password");
-    navigate("/"); // redirect to login/home after logout
+    navigate("/"); 
   };
 
   return (
     <nav className="bg-blue-300 p-4 shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         
-        {/* Logo */}
         <div className="text-xl font-extrabold text-black">
           <Link to="/index">MyApp</Link>
         </div>
 
-        {/* Desktop Menu */}
         <ul className="hidden md:flex gap-8 font-semibold text-black">
           <li><Link to="/index">Home</Link></li>
           <li><Link to="/blog">Blog</Link></li>
@@ -30,7 +28,6 @@ const Header = () => {
           <li><Link to="/about">About</Link></li>
         </ul>
 
-        {/* Right Side (Login/Logout) */}
         <div className="hidden md:flex">
           {isLogin ? (
             <button
@@ -49,7 +46,6 @@ const Header = () => {
           )}
         </div>
 
-        {/* Mobile Menu Button */}
         <button
           className="md:hidden text-black focus:outline-none"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -62,7 +58,6 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
       {menuOpen && (
         <div className="md:hidden mt-4 bg-blue-200 rounded-lg p-4 space-y-3">
           <ul className="flex flex-col gap-3 font-semibold text-black">

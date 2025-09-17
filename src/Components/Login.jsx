@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -9,10 +10,8 @@ const Login = () => {
     useEffect(() => {
         if (localStorage.getItem("isLogin") === "true") {
             navigate("/index");
-
         }
-    },[])
-
+    }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -27,9 +26,12 @@ const Login = () => {
             const result = await response.json();
 
             if (result.status === true && result.statusCode === 200) {
-                localStorage.setItem("username", email)
-                localStorage.setItem("password", password)
-                localStorage.setItem("isLogin", true)
+                // 🔐 hash password before storing
+                const hashedPassword = bcrypt.hashSync(password, 10);
+
+                localStorage.setItem("username", email);
+                localStorage.setItem("password", hashedPassword);
+                localStorage.setItem("isLogin", true);
                 navigate("/index");
             } else {
                 alert("Invalid credentials or login failed!");
