@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import bcrypt from "bcryptjs";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -8,8 +8,23 @@ const Login = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("isLogin") === "true") {
-            navigate("/index");
+        const token = localStorage.getItem("logintoken");
+        console.log(token);
+
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                console.log();
+
+                if (decoded.exp > Date.now() / 1000) {
+                    navigate("/index");
+                } else {
+                    localStorage.removeItem("logintoken");
+                }
+            } catch (err) {
+                console.error("Invalid token:", err);
+                localStorage.removeItem("logintoken");
+            }
         }
     }, [navigate]);
 
@@ -17,7 +32,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch("https://dashboard-alpha-nine-93.vercel.app/login", {
+            const response = await fetch("http://127.0.0.1:5000/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),
@@ -26,12 +41,8 @@ const Login = () => {
             const result = await response.json();
 
             if (result.status === true && result.statusCode === 200) {
-                // 🔐 hash password before storing
-                const hashedPassword = bcrypt.hashSync(password, 10);
-
-                localStorage.setItem("username", email);
-                localStorage.setItem("password", hashedPassword);
-                localStorage.setItem("isLogin", true);
+                localStorage.setItem("logintoken", result.loginToken);
+                localStorage.setItem("loginHaiKya", true);
                 navigate("/index");
             } else {
                 alert("Invalid credentials or login failed!");

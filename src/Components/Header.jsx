@@ -3,13 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isLogin = localStorage.getItem("isLogin") === "true";
+  const isLogin = localStorage.getItem("loginHaiKya") === "true";
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.setItem("isLogin", false);
-    localStorage.removeItem("username");
-    localStorage.removeItem("password");
+    localStorage.setItem("loginHaiKya", false);
+    localStorage.removeItem("logintoken");
     navigate("/"); 
   };
 
