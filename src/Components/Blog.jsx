@@ -116,7 +116,7 @@ const Blog = () => {
                  {blog.username === localStorage.getItem("username") ? (
                     <a
                     className="text-xs text-red-600 hover:underline"
-                    href={`http://127.0.0.1:5000/deleteblog/${blog.id}`}
+                    href={`https://dashboard-alpha-nine-93.vercel.app/deleteblog/${blog.id}`}
                   >
                     Delete
                   </a>
