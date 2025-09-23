@@ -93,6 +93,9 @@ const Login = () => {
                 >
                     Login
                 </button>
+                <div className="flex items-center justify-center">
+                    <a  href="/changepassword">Chnage Password</a>
+                </div>
             </form>
         </div>
     );

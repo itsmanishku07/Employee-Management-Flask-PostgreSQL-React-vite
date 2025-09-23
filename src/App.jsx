@@ -8,6 +8,8 @@ import DepartmentInfo from './Components/DepartmentInfo';
 import Login from './Components/Login';
 import Home from './Components/Home';
 import Blog from './Components/Blog';
+import ChangePassword from './Components/ChangePassword';
+import NewPassword from './Components/NewPassword';
 
 const App = () => {
   return (
@@ -23,6 +25,8 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/index" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/changepassword" element={<ChangePassword />} />
+          <Route path="/newpassword" element={<NewPassword />} />
         </Routes>
       </div>
     </BrowserRouter>
