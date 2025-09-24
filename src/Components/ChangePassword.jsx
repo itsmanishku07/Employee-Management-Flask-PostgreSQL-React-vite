@@ -17,13 +17,13 @@ const ChangePassword = () => {
       });
 
       if (response.ok) {
-        setMessage("✅ Password reset link sent to your email.");
+        setMessage("Password reset link sent to your email.");
       } else {
-        setMessage("❌ Error sending reset link. Try again.");
+        setMessage("Error sending reset link. Try again.");
       }
     } catch (error) {
       console.error("Error:", error);
-      setMessage("⚠️ Something went wrong. Please try later.");
+      setMessage("Something went wrong. Please try later.");
     }
   };
 
