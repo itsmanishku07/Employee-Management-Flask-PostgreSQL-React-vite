@@ -26,14 +26,14 @@ const NewPassword = () => {
       });
 
       if (response.ok) {
-        setMessage("✅ Password has been reset successfully.");
+        setMessage("Password has been reset successfully.");
       } else {
         const data = await response.json();
         setMessage(`${data.error || "Failed to reset password."}`);
       }
     } catch (error) {
       console.error("Error:", error);
-      setMessage("⚠️ Something went wrong.");
+      setMessage("Something went wrong.");
     }
   };
 
